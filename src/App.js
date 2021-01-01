@@ -1,25 +1,30 @@
 import logo from './logo.svg';
+import { connect } from "react-redux";
+import { toggleCartHidden } from "./redux/cart/cart-action";
 import './App.css';
 
-function App() {
+function App({toggleCartHidden,hidden}) {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       { 
+          hidden ? null : "Showing"
+       }
+        <div  onClick={toggleCartHidden}> <img src={logo} className="App-logo" alt="logo" />
+       </div>
+
+       
       </header>
     </div>
   );
 }
+const mapDispatchToProps = (dispatch) => ({
+  toggleCartHidden: () => dispatch(toggleCartHidden()),
+});
 
-export default App;
+const mapStateToProps = (state) => ({
+  hidden: state.cart.hidden,
+ 
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
